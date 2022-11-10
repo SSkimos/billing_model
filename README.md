@@ -1,1 +1,3 @@
-# billing_model
+# billing-model
+## Database prototype:
+![db_prototype](materials/prototype.png)
