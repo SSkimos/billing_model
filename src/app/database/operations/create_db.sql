@@ -22,7 +22,8 @@ create table employee (
 
 create table customer_type (
     id integer primary key,
-    title varchar(120)
+    title varchar(120),
+    unique (title)
 );
 
 create table customer (
@@ -43,7 +44,7 @@ create table account (
     id integer primary key,
     customer_id integer,
     number integer,
-    count double precision,
+    count double precision default 0,
     foreign key (customer_id)
         references customer (id)
         on update cascade
