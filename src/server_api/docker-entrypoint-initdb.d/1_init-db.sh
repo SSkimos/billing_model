@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
-psql -U admin -d test --command='create user admin';
-psql -U admin -d test --command='GRANT ALL PRIVILEGES ON DATABASE test TO admin';
-psql -U admin -d test --command="ALTER USER admin WITH PASSWORD 'admin'";
-psql -U admin -d test --command='ALTER USER admin WITH SUPERUSER';
-psql -U admin -d test --command='drop table if exists customer; \
+psql -U postgres -d billing_db --command='create user admin';
+psql -U postgres -d billing_db --command='GRANT ALL PRIVILEGES ON DATABASE billing_db TO admin';
+psql -U postgres -d billing_db --command="ALTER USER admin WITH PASSWORD '321'";
+psql -U postgres -d billing_db --command='ALTER USER admin WITH SUPERUSER';
+psql -U postgres -d billing_db --command='drop table if exists customer; \
 create table customer ( \
     id integer primary key, \
     name varchar(120) \

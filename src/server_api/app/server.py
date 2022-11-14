@@ -17,14 +17,14 @@ def basic():
     return {"Hello": "server.py"}
 
 
-@app.get("/customers/all")
+@app.get("/all")
 def read_all_customers():
     # queue connect
     con = psycopg2.connect(
-        database="test",
+        database="billing_db",
         user="admin",
-        password="admin",
-        host="127.0.0.1",
+        password="'321'",
+        host="postgres",
         port="5432"
     )
     cur = con.cursor()

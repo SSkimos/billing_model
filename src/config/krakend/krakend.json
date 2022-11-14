@@ -17,6 +17,20 @@
             ]
         },
         {
+            "endpoint": "/server/customer",
+            "output_encoding": "json",
+            "method": "GET",
+            "backend": [
+                {
+                    "host": [
+                        "http://server_api:5001"
+                    ],
+                    "url_pattern": "/all",
+                    "encoding": "json"
+                }
+            ]
+        },
+        {
             "endpoint": "/transaction",
             "output_encoding": "json",
             "method": "GET",
