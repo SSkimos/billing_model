@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI
+import json
 
 # TODO: refactoring
 import psycopg2
@@ -8,46 +9,33 @@ app = FastAPI()
 
 
 @app.get("/")
-def basic():
-    con = psycopg2.connect(
-        database="billing",
-        user="test_user",
-        password="123",
-        host="localhost",
-        port="9876"
-    )
-    cur = con.cursor()
-    cur.execute("select * from customer;")
-    rows = cur.fetchall()
-    return {"Hello": "database.py"}
-
-
-@app.get("/server")
-def basic():
-    con = psycopg2.connect(
-        database="billing",
-        user="test_user",
-        password="123",
-        host="localhost",
-        port="9876"
-    )
-    cur = con.cursor()
-    cur.execute("select * from customer;")
-    rows = cur.fetchall()
-    return {"Hello": "database.py"}
-
-
-@app.get("/all")
 def read_all_customers():
     # queue connect
     con = psycopg2.connect(
         database="billing",
         user="test_user",
         password="123",
-        host="localhost",
-        port="9876"
+        host="postgres_db",
+        port="5432"
     )
     cur = con.cursor()
     cur.execute("select * from customer;")
-    rows = cur.fetchall()
+    rows = [dict((cur.description[i][0], value) for i, value in enumerate(row)) for row in cur.fetchall()]
+    cur.connection.close()
     return rows
+
+# @app.get("/")
+# def read_all_customers():
+#     # queue connect
+#     con = psycopg2.connect(
+#         database="billing",
+#         user="test_user",
+#         password="123",
+#         host="postgres_db",
+#         port="5432"
+#     )
+#     cur = con.cursor()
+#     cur.execute("select * from customer;")
+#     rows = cur.fetchall()
+#     cur.connection.close()
+#     return rows

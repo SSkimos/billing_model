@@ -24,3 +24,8 @@ services:
       - "5002:5002"
     depends_on:
       - krakend
+
+networks:
+    default:
+      external:
+        name: test

@@ -4,29 +4,13 @@
     "endpoints": [
         {
             "endpoint": "/server",
-            "output_encoding": "json",
             "method": "GET",
             "backend": [
                 {
                     "host": [
                         "http://server_api:5001"
                     ],
-                    "url_pattern": "/",
-                    "encoding": "json"
-                }
-            ]
-        },
-        {
-            "endpoint": "/server/customer",
-            "output_encoding": "json",
-            "method": "GET",
-            "backend": [
-                {
-                    "host": [
-                        "http://server_api:5001"
-                    ],
-                    "url_pattern": "/all",
-                    "encoding": "json"
+                    "url_pattern": "/"
                 }
             ]
         },
