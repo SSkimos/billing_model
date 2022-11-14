@@ -21,7 +21,7 @@ def basic():
 def read_all_customers():
     # queue connect
     con = psycopg2.connect(
-        database="billing_db",
+        database="billing",
         user="postgres",
         password="321",
         host="postgres_db",

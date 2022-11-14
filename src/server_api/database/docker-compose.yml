@@ -1,0 +1,17 @@
+version: "3"
+
+volumes:
+  pg_project:
+
+services:
+  postgres_db:
+    image: postgres:14.4
+    environment:
+      - POSTGRES_DB=billing
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=321
+    volumes:
+      - pg_project:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d/1_init-db.sh:/docker-entrypoint-initdb.d/1_init-db.sh
+    ports:
+      - "5432:5432"
