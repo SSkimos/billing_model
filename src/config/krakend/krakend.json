@@ -1,0 +1,34 @@
+{
+    "version": 3,
+    "name": "simpleapi gw",
+    "endpoints": [
+        {
+            "endpoint": "/server",
+            "output_encoding": "json",
+            "method": "GET",
+            "backend": [
+                {
+                    "host": [
+                        "http://server_api:5001"
+                    ],
+                    "url_pattern": "/",
+                    "encoding": "json"
+                }
+            ]
+        },
+        {
+            "endpoint": "/transaction",
+            "output_encoding": "json",
+            "method": "GET",
+            "backend": [
+                {
+                    "host": [
+                        "http://transaction_api:5002"
+                    ],
+                    "url_pattern": "/",
+                    "encoding": "json"
+                }
+            ]
+        }
+    ]
+}

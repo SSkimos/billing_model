@@ -1,23 +1,10 @@
-from pydantic import BaseModel
-from typing import Union
-from fastapi import FastAPI
+#!/usr/bin/env python
 import pika
 import uuid
 
-app = FastAPI()
 
+class FibonacciRpcClient(object):
 
-class Customer(BaseModel):
-    id: int
-    # customer_type: int
-    # account_id: int
-    # first_name: str
-    # second_name: str
-    # address: str
-    # mobile_number: int
-
-
-class Server(object):
     def __init__(self):
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='localhost'))
@@ -39,7 +26,7 @@ class Server(object):
         if self.corr_id == props.correlation_id:
             self.response = body
 
-    def call(self, message):
+    def call(self, n):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -49,34 +36,11 @@ class Server(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=message)
+            body=n)
         self.connection.process_data_events(time_limit=None)
-        return self.response
+        return int(self.response)
 
 
-def queue_connect():
-    con = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
-    return con
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/customer/{customer_id}")
-def read_customer(customer_id: int):
-    server_rpc = Server()
-    response = server_rpc.call(f"select * from customer where id = {customer_id}")
-    return response
-
-
-@app.post("/customer/")
-def create_customer(customer: Customer):
-    return customer
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+fibonacci_rpc = FibonacciRpcClient()
+response = fibonacci_rpc.call("select * from user")
+print(response)
