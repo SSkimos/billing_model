@@ -9,12 +9,32 @@ app = FastAPI()
 
 @app.get("/")
 def basic():
-    return {"Hello": "server.py"}
+    con = psycopg2.connect(
+        database="billing",
+        user="test_user",
+        password="123",
+        host="localhost",
+        port="9876"
+    )
+    cur = con.cursor()
+    cur.execute("select * from customer;")
+    rows = cur.fetchall()
+    return {"Hello": "database.py"}
 
 
 @app.get("/server")
 def basic():
-    return {"Hello": "server.py"}
+    con = psycopg2.connect(
+        database="billing",
+        user="test_user",
+        password="123",
+        host="localhost",
+        port="9876"
+    )
+    cur = con.cursor()
+    cur.execute("select * from customer;")
+    rows = cur.fetchall()
+    return {"Hello": "database.py"}
 
 
 @app.get("/all")
@@ -22,10 +42,10 @@ def read_all_customers():
     # queue connect
     con = psycopg2.connect(
         database="billing",
-        user="postgres",
-        password="321",
+        user="test_user",
+        password="123",
         host="localhost",
-        port="5432"
+        port="9876"
     )
     cur = con.cursor()
     cur.execute("select * from customer;")
