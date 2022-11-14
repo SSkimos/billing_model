@@ -24,7 +24,7 @@ def read_all_customers():
         database="billing",
         user="postgres",
         password="321",
-        host="postgres_db",
+        host="localhost",
         port="5432"
     )
     cur = con.cursor()
