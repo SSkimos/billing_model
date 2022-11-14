@@ -20,6 +20,7 @@ services:
       - "5001:5001"
     depends_on:
       - krakend
+      - postgres_db
 
   transaction_api:
     build: transaction_api/
@@ -28,11 +29,11 @@ services:
     depends_on:
       - krakend
 
-  postgres:
+  postgres_db:
     image: postgres:13.3
     environment:
       POSTGRES_DB: "billing_db"
-      POSTGRES_USER: "admin"
+      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "321"
     volumes:
       - pg_project:/var/lib/postgresql/data

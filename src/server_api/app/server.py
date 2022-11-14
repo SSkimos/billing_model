@@ -22,9 +22,9 @@ def read_all_customers():
     # queue connect
     con = psycopg2.connect(
         database="billing_db",
-        user="admin",
-        password="'321'",
-        host="postgres",
+        user="postgres",
+        password="321",
+        host="postgres_db",
         port="5432"
     )
     cur = con.cursor()
