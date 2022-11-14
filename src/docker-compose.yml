@@ -1,4 +1,8 @@
 version: "3"
+
+volumes:
+  pg_project:
+
 services:
   krakend:
     # The :watch image restarts the service automatically when the configuration files change.
@@ -16,6 +20,7 @@ services:
       - "5001:5001"
     depends_on:
       - krakend
+      - postgres
 
   transaction_api:
     build: transaction_api/
@@ -23,3 +28,17 @@ services:
       - "5002:5002"
     depends_on:
       - krakend
+      - postgres
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
+    volumes:
+      - pg_project:/var/lib/postgresql/data
+      - ./server_api/docker-entrypoint-initdb.d/1_init-db.sh
+    ports:
+      - "5432:5432"
+
