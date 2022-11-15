@@ -20,7 +20,7 @@ def read_all_customers():
     )
     cur = con.cursor()
     cur.execute("select * from customer;")
-    rows = [dict((cur.description[i][0], value) for i, value in enumerate(row)) for row in cur.fetchall()]
+    rows = json.loads(cur.fetchone())
     cur.connection.close()
     return rows
 
