@@ -4,6 +4,7 @@
     "endpoints": [
         {
             "endpoint": "/server",
+            "output_encoding": "negotiate",
             "method": "GET",
             "backend": [
                 {
