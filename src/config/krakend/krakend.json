@@ -4,13 +4,14 @@
     "endpoints": [
         {
             "endpoint": "/server",
-            "output_encoding": "negotiate",
+            "output_encoding": "no-op",
             "method": "GET",
             "backend": [
                 {
                     "host": [
                         "http://server_api:5001"
                     ],
+                    "encoding": "no-op",
                     "url_pattern": "/"
                 }
             ]
