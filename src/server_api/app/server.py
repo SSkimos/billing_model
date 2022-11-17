@@ -22,7 +22,7 @@ class PostgreSQL:
         return self.conn
 
 
-@app.get("/")
+@app.get("/customers/")
 def read_all_customers():
     # queue connect
     postgres = PostgreSQL()
@@ -39,18 +39,3 @@ def read_all_customers():
         objects_list.append(d)
     return objects_list
 
-# @app.get("/")
-# def read_all_customers():
-#     # queue connect
-#     con = psycopg2.connect(
-#         database="billing",
-#         user="test_user",
-#         password="123",
-#         host="postgres_db",
-#         port="5432"
-#     )
-#     cur = con.cursor()
-#     cur.execute("select * from customer;")
-#     rows = cur.fetchall()
-#     cur.connection.close()
-#     return rows
