@@ -1,5 +1,4 @@
 import psycopg2
-from model import *
 
 
 # ------------ Manager (Model objects handler) ------------ #

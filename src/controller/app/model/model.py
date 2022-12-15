@@ -1,6 +1,5 @@
 import psycopg2
-
-from src.controller.app.model.baseManager import BaseManager
+from .baseManager import BaseManager
 
 
 # ----------------------- Model ----------------------- #

@@ -1,7 +1,7 @@
 import psycopg2
 
-from src.controller.app.model.baseManager import BaseManager
-from src.controller.app.model.model import BaseModel
+from .model import BaseModel
+from .baseManager import  BaseManager
 
 
 # ----------------------- Tables ----------------------- #
