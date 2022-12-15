@@ -1,5 +1,7 @@
 import psycopg2
 
+from src.controller.app.model.baseManager import BaseManager
+
 
 # ----------------------- Model ----------------------- #
 class MetaModel(type):

@@ -1,10 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
-import sys
 
-import model.baseManager
-import model.tables
-
+from src.controller.app.model.tables import Customer
 
 app = FastAPI()
 
