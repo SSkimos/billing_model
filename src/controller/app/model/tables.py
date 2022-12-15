@@ -1,7 +1,7 @@
 import psycopg2
 
 from .model import BaseModel
-from .baseManager import  BaseManager
+from .baseManager import BaseManager
 
 
 # ----------------------- Tables ----------------------- #
