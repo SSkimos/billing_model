@@ -26,7 +26,7 @@ class BaseManager:
     def select(self, *field_names, chunk_size=2000):
         # Build SELECT query
         fields_format = ', '.join(field_names)
-        query = f"SELECT {fields_format} FROM {self.model_class.table_name}"
+        query = f"SELECT {fields_format} FROM {self.model_class.table_name};"
 
         # Execute query
         cursor = self._get_cursor()
@@ -58,7 +58,7 @@ class BaseManager:
             rows))  # https://www.psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
 
         query = f"INSERT INTO {self.model_class.table_name} ({fields_format}) " \
-                f"VALUES {values_placeholder_format}"
+                f"VALUES {values_placeholder_format};"
 
         params = list()
         for row in rows:
@@ -84,3 +84,45 @@ class BaseManager:
 
         # Execute query
         self._execute_query(query)
+
+
+# ----------------------- Model ----------------------- #
+class MetaModel(type):
+    manager_class = BaseManager
+
+    def _get_manager(cls):
+        return cls.manager_class(model_class=cls)
+
+    @property
+    def objects(cls):
+        return cls._get_manager()
+
+
+class BaseModel(metaclass=MetaModel):
+    table_name = ""
+
+    def __init__(self, **row_data):
+        for field_name, value in row_data.items():
+            setattr(self, field_name, value)
+
+    def __repr__(self):
+        attrs_format = ", ".join([f'{field}={value}' for field, value in self.__dict__.items()])
+        return f"<{self.__class__.__name__}: ({attrs_format})>\n"
+
+
+# ----------------------- Setup ----------------------- #
+DB_SETTINGS = {
+    'host': '127.0.0.1',
+    'port': '9876',
+    'database': 'billing_system',
+    'user': 'postgres',
+    'password': '321'
+}
+
+BaseManager.set_connection(database_settings=DB_SETTINGS)
+
+
+# ----------------------- Tables ----------------------- #
+class Customer(BaseModel):
+    manager_class = BaseManager
+    table_name = "customer"

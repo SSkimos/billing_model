@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 def get_main():
-    employees = Customer.objects.select('first_name', 'second_name')
+    employees = Customer.objects.select('f_name', 'l_name')
     print(employees)
 
 
