@@ -4,3 +4,8 @@ services:
     build: controller/
     ports:
       - "5001:5001"
+
+  workers:
+    build: workers/
+    ports:
+      - "5002:5002"

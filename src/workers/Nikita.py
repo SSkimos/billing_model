@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+import psycopg2
 import pika
 import uuid
-
+import time
 
 class Worker(object):
     def __init__(self):
@@ -35,13 +35,24 @@ class Worker(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str("test_message"))
+            body=str("BEGIN; insert into transaction (id, s_id, r_id, count) values (1, 1, 2, 50); COMMIT;"))
         self.connection.process_data_events(time_limit=None)
         return self.response
 
 
-worker = Worker()
+def show_balance():
+    conn = psycopg2.connect(database="billing_system", user="postgres",
+                            password="321", host="localhost", port=9876)
+    cur = conn.cursor()
+    cur.execute("""
+    SELECT balance from customer
+    where cus_name = 'Nikita';
+    """)
+    return cur.fetchall()
 
-print(" [x] sending message")
+
+# print("Nikita balance before operation:", show_balance()[0][0])
+worker = Worker()
 response = worker.call()
-print(" [.] Got %r" % response)
+time.sleep(5)
+print("Nikita balance after operation:", show_balance()[0][0])
